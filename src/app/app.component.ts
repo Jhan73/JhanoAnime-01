@@ -129,6 +129,39 @@ export class AppComponent {
       characters:["Gon","Kilua"]
     }
   ];
+  newAnime = {
+      name: "",
+      description: "",
+      Rating: 0,
+      episode: 0,
+      categorie: "",
+      studio: "",
+      img: "",
+      characters:[""]
+  };
 
+  addAnime(){
+    this.animes.push(this.newAnime)
+  }
+  addCharacter(){
+    this.newAnime.characters.push("");
+  }
+  deleteCharacter(index: number){/*A MEJORAR */
+    this.newAnime.characters.splice(index,1)
+  }
   
+  favoritesAnime: Anime[] =[];
+
+  deshabilitado = false
+  addToFavorites(i: number){
+    this.favoritesAnime.push(this.animes[i]);
+    this.favoritesAnime.length === 4?this.deshabilitado=true:this.deshabilitado=false;
+  }
+  removeFromFavorites(i: number){
+    this.favoritesAnime.splice(i,1);
+    this.deshabilitado=false
+  }
+  btn(){
+    /*this.habilitado = !this.habilitado*/
+  }
 }

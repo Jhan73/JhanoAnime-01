@@ -1,9 +1,9 @@
 <header>
     <h1>Nakamas</h1>
 </header>
-<section>
-    <div class="container">
-        <div class="card" *ngFor="let anime of animes">
+<section class="container">
+    <section class="section">
+        <div class="card" *ngFor="let anime of animes;index as i">
             <div class="card__title">
                 <h3 >{{anime.name}}</h3>
             </div>
@@ -43,10 +43,71 @@
             <hr>
             <div class="card__buttons">
                 <button class="card__buttons--back">Back</button>
-                <button class="card__buttons--add">Add</button>
+                <button class="card__buttons--add" (click)="addToFavorites(i)"  [disabled]="deshabilitado" name="btn" >Add</button>
             </div>
             
 
         </div>
-    </div>
+    </section>
+    <section>
+        <section class="form">
+            <form action="POST" #miFormulario="ngForm" (ngSubmit)="addAnime()">
+                <label for="name">
+                    <span class="form__span">Name: </span>
+                    <input type="text" id="name" name="animeName" [(ngModel)]="newAnime.name" required #nameInput="ngModel">
+                    <p *ngIf="nameInput.valid === false">Valides {{nameInput.valid}} </p>
+                </label>
+                <label for="rating">
+                    <span class="form__span">Rating: </span>
+                    <input type="text" name="animeRating" id="rating" class="rating" [(ngModel)]="newAnime.Rating" required >
+                </label>
+                <label for="episode">
+                    <span class="form__span">Episode: </span>
+                    <input type="text" name="animeEspisode" id="episode" class="episode" [(ngModel)]="newAnime.episode" required >
+                </label>
+                <label for="categorie">
+                    <span class="form__span">Categorie:  </span>
+                    <input type="text" name="animeCategorie" id="categorie" [(ngModel)]="newAnime.categorie" class="categorie" required>
+                </label>
+                <label for="studio">
+                    <span class="form__span">Animation studio:</span>
+                    <input type="text" name="animatioStudio" id="studio" class="studio" [(ngModel)]="newAnime.studio" required >
+                </label>
+                <label for="description">
+                    <span class="form__span">Description: </span>
+                    <input type="text" name="animeDescription" id="description" class="description" [(ngModel)]="newAnime.description" required>
+                </label>
+                <label for="image">
+                    <span class="form__span">Image:</span>
+                    <input type="file" name="animeImg" id="image" class="image" required>
+                </label>
+                <label for="">
+                    <span class="form__span">Characters: </span>
+                    <button class="form__character form__character--add" type="button" (click)="addCharacter()"><i class="fa-sharp fa-solid fa-plus"></i></button>
+                    <br>
+                    <br>
+                    <div class="from__characters" *ngFor="let character of newAnime.characters; index as i">
+                        <input type="text" name="animeCharacter" id="" class="character" required [(ngModel)]="newAnime.characters[i]" maxlength="50">
+                        <button type="button" class="form__character form__character--delete" (click)="deleteCharacter(i)"><i class="fa-sharp fa-solid fa-trash"></i></button>
+                    </div>
+                </label>
+                <hr>
+                <button type="submit" class="form--submit">Add</button>
+            </form>
+        </section>
+        <section class="favorites">
+            <header>
+                <h2>My selection</h2>
+            </header>
+            <section class="favorites__section">
+                <div class="card-favorite" *ngFor="let anime of favoritesAnime; index as i" [style.background-image]="'url('+ anime.img +')'"  >
+                    <h3>{{anime.name}} </h3>
+                    <button class="card-favorite__button" (click)="removeFromFavorites(i)" ><i class="fa-sharp fa-solid fa-circle-minus"></i></button>
+                </div>
+            </section>
+        </section>
+        <h2>Test</h2>
+        <button [disabled]="deshabilitado" >Hala</button>
+        <button (click)="btn()">1/0</button>
+    </section>
 </section>
